@@ -19,4 +19,9 @@ public class BookRepository {
         else
             return Optional.empty();
     }
+
+
+    public void removeBookById(int id) {
+        data.remove(id);
+    }
 }
