@@ -1,11 +1,21 @@
 package com.PMgroup.BookManagement;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Objects;
 import java.util.Optional;
 
+@Service
 public class BookServices {
-    BookRepository bookRepository=new BookRepository();
+
+
+    @Autowired
+    BookRepository bookRepository;
+
+
     public  boolean addBook(Book book) throws BookAlreadyExistException{
+
         Optional<Book> book1=bookRepository.getById(book.getBookId());
         if(book1.isPresent())
         {
@@ -13,10 +23,12 @@ public class BookServices {
         }
         return bookRepository.addBook(book);
 
+
     }
     public Book findBook(int id) throws BookDoesntExistException
     {
         Optional<Book> book=bookRepository.getById(id);
+
         if(book.isEmpty())
             throw new BookDoesntExistException(id);
         return book.get();

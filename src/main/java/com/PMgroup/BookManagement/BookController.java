@@ -1,5 +1,6 @@
 package com.PMgroup.BookManagement;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,11 +8,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
+@RequestMapping("/book")
 public class BookController {
 
 
-    BookServices bookServices=new BookServices();
-    @PostMapping("/add-book")
+
+
+    @Autowired
+    BookServices bookServices;
+
+
+    @PostMapping("/add")
     public ResponseEntity addBook (@RequestBody Book book)
     {
         try {
@@ -30,7 +37,7 @@ public class BookController {
         //return "Book with ID: "+book.getBookId()+" has added successfully";
 
     }
-    @GetMapping("/find-book")
+    @GetMapping("/find")
     public ResponseEntity findBook(@RequestParam int id)
     {
       try
@@ -49,13 +56,9 @@ public class BookController {
           return new ResponseEntity("Something went wrong",HttpStatus.valueOf(500));
       }
     }
-//    @GetMapping("/find-book/find-books/{id}")
-//    public Book findBooks(@PathVariable int id)
-//    {
-//        return data.get(id);
-//    }
 //
-    @PutMapping("/update-book/{id}")
+//
+    @PutMapping("/update/{id}")
     public String updateBook(@PathVariable int id,@RequestParam(required = false) String title,@RequestParam(required = false) String author,@RequestParam(required = false) Integer pages)
     {
        try {
@@ -68,13 +71,8 @@ public class BookController {
        }
     }
 //
-//    @GetMapping("/all-books")
-//    public List<Book> getAllBooks()
-//    {
 //
-//       return data.values().stream().toList();
-//    }
-    @DeleteMapping("/remove-book/{id}")
+    @DeleteMapping("/remove/{id}")
     public ResponseEntity removeBook(@PathVariable int id)
     {
       try
